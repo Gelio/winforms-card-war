@@ -15,8 +15,8 @@ namespace Card_War
         public Form1()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.FormClosing += confirmClosing;
+            this.openNewGameWindow();
         }
 
         private void confirmClosing(object sender, FormClosingEventArgs e)
@@ -36,6 +36,39 @@ namespace Card_War
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void openNewGameWindow()
+        {
+            NewGameWindow newGame = new NewGameWindow();
+            newGame.FormClosing += confirmClosing;
+            newGame.FormClosed += NewGame_FormClosed;
+            newGame.newGameStarted += newGameStarted;
+            newGame.Show();
+        }
+
+        private void NewGame_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.FormClosing -= confirmClosing;
+            this.Close();
+        }
+
+        private void newGameStarted(object sender, EventArgs e)
+        {
+            NewGameWindow newGame = sender as NewGameWindow;
+            newGame.FormClosing -= confirmClosing;
+            newGame.FormClosed -= NewGame_FormClosed;
+            newGame.Close();
+            Opacity = 100;
+            ShowInTaskbar = true;
+            this.Show();
+            this.Focus();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Opacity = 0;
+            ShowInTaskbar = false;
         }
     }
 }
