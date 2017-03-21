@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Windows Forms Task</title>
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Windows Forms</h1>
+    <h2>War - card game</h2>
+	<p>The goal is to implement simplified version of War - card game (not described issues should imitate example application)</p>
+	<h3>Part I</h3>
+	<ul>
+		<ul>
+		<li>Main window - maximize button is inactive, resizing is not possible</li>
+		<li>Top of the window: menu bar consists of buttons "Game" and "About"</li>
+		<li>Button "Game" contains submenus "New Game" and "Exit"</li>
+		<li>Button "About" displays short info about the app</li>
+		<li>Button "New Game" - launches window, in which user can define:</li>
+			<ul>
+			<li>User name</li>
+			<li>CPU name</li>
+			<li>Number of rounds to be played in a game</li>
+			</ul>
+		<li>In new game window, the input data is verified (in case of incorrect or empty input, information about the error should be displayed)</li>
+		<li>Button "Exit" closes application</li>
+		<li>The rest of main window: "table"</li>
+			<ul>
+			<li>There are 4 buttons and a few labels on the screen</li>
+			<li>Every text displayed depends on input data and current state of the game (line in the example)</li>
+			<li>Only the button representing player's cards generates next round</li>
+			</ul>
+		<li>Game logic:</li>
+			<ul>
+			<li>Every round, 2 numbers are randomly generated - for user and CPU opponent. Numbers are integers form 1 to 10</li>
+			<li>Higher number gives proper player a point</li>
+			<li>In case of draw noone gets a point</li>
+			<li>The button color, on which the higher number is displayed is changed to Color.Green, lower number - Color.Red, draw - Color.Orange</li>
+			<li>After playing number of rounds defined by user, a window pops up informing about game state and sugests another game</li>
+			</ul>
+		<li>App can be closed:</li>
+			<ul>
+			<li>By clicking 'X' in the main window</li>
+			<li>By clicking 'X' in new game window (only after running application - first new game window)</li>
+			<li>By clicking "Exit" in "Game" menu</li>
+			<li>By combination ALT+F4</li>
+			<li>After finishing the game (after infomation about game result, if user decides not to start another game)</li>
+			</ul>
+		<li>Before closing the app, messagebox pops up to ensure that the user wants to close the app</li>
+		<li>App starts displaying new game window, main window is not visible</li>
+		</ul>
+		</li>
+		<li>Tips:
+		<ul>
+			<li>DialogResult, MessageBoxButtons, MessageBoxIcon</li>
+			<li>Button, Label</li>
+			<li>FormClosing, FormClosingEventArgs.Cancel</li>
+			<li>FormBorderStyle</li>	
+		</ul>
+		</li>
+		<li>Scoring:
+		<ul>
+			<li>Main window and game logic: 4 points<br />
+			<li>Full implementation: 8 points</li>
+		</ul>
+		</li>
+	</ul>
+
+	<h3>Part II</h3>
+	<ul>
+	<li>Only the main window is shown on the menu bar</li>
+   	<li>New game window has a new field to fill - sets - defines number of sets of cards 1-10 in the game (value 1 means, there are 10 cards in the game, 2-20, etc)</li>
+	<li>Menu "Game" has 2 new buttons - Save and Load (files saved in own format, for example *.mygame)</li>
+	<li>Menu has new button "Highscores"</li>
+	<li>Main window:</li>
+			<ul>
+			<li>User can scale the main window (and maximize). Defined (reasonable) min size, max size is not defined</li>
+			<li>Scaling window scales the controls</li>
+			<li>Buttons representing user's and CPU's hands display a picture (back.bmp)</li>
+			<li>On the bottom of the window, in a frame, there is a panel responsible for setting the auto gameplay</li>
+			<li>Trackbar defines speed of auto gameplay (from 1 round per second to 1 round per 10ms, trackbar step is 10 ms)</li>
+			<li>Textbox defines last round to be played by auto gameplay</li>
+			<li>Button changes text between "Start"/"Stop" depending, if the auto gameplay is truned on or off</li>
+			</ul>
+	<li>Game logic:</li>
+			<ul>
+			<li>The deck contains (sets * 10) cards (sets defined in new game window) - sets cards 1, sets cards 2, etc</li>
+			<li>At the beginning, every player gets the same number of random cards from the deck, all cards are given away</li>
+			<li>The points a player has in each round is based on the number of cards in "hand" of a player</li>
+			<li>If a player wins a round, the cards from table are added to his hand - to the end of a list</li>
+			<li>In case of a draw on a table, the war begins -  next cards are put on table upside down, and the following ones are being compared</li>
+			<li>The buttons representing cards in game display pictures (file numerki.gif), or the back of a card in case of draw in previus round</li>
+			<li>File numerki.gif is created in a way that every number has the hight of a picture and is 100px wide</li>
+			<li>The game ends after playing number of rounds defined in new game window, or if any of players loses the last card</li>
+			<li>After the game ends, the user name, score and number of played rounds is saved to highscores</li>
+			</ul>
+	<li>Auto gameplay:</li>
+			<ul>
+			<li>Next round is generated every timer tick (interval defined by trackbar)</li>
+			<li>Auto gameplay is ended if we reach the round defined as last by user, or if the game is over</li>
+			<li>Auto gameplay can be stopped by clicking "Stop" button</li>
+			<li>The pace of auto gameplay can be changed during auto gameplay</li>
+			</ul>
+	<li>After the game, app informs about the result and suggests showing postgame stats</li>
+	<li>Postgame stats window:</li>
+			<ul>
+			<li>2 grapsh are displayed each representing user's and CPU's points during the whole game</li>
+			<li>Window has to be closed to get back to main window</li>
+			</ul>
+	<li>Highscores window:</li>
+			<ul>
+			<li>Window displays results of played games</li>
+			<li>Highscores display name, points and number of played rounds</li>
+			<li>Data is sorted by points and number of rounds, like in example</li>
+			<li>Window has to be closed to get back to main window</li>
+			</ul>
+	<li>Save/Load game - user can save and load game in each moment of the game. The app should assure, that after loading a saved game the state of table stays the same and there are proper cards in game. The postgame stats should show the same window if the game is played all at once and if the user decides to save and load the game</li>
+	<li>Tips:
+		<ul>
+			<li>ListView, ListViewItem</li>
+			<li>OpenFileDialog, SaveFileDialog</li>
+			<li>Timer.Interval, TrackBar.Value</li>
+			<li>Chart</li>	
+		</ul>
+	</li>
+	<li>Scoring:
+	<ul>
+		<i>Fulfilling goals from part I is mandatory</i>
+		<li>Proper bahaviour of main window - 2 points</li>
+		<li>Game logic - 3 points</li>
+		<li>Highscores - 2 points</li>
+		<li>Save/Load game - 2 points</li>
+		<li>Auto gameplay - 1 points</li>
+		<li>Postgame stats - 2 points</li>
+	</ul>
+	</li>
+</ul>
+</body></html>
