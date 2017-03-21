@@ -88,7 +88,7 @@
             this.numberOfRounds.Size = new System.Drawing.Size(120, 20);
             this.numberOfRounds.TabIndex = 5;
             this.numberOfRounds.Value = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
@@ -115,6 +115,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.username);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MinimizeBox = false;
             this.Name = "NewGameWindow";
             this.Text = "New game";
             ((System.ComponentModel.ISupportInitialize)(this.numberOfRounds)).EndInit();

@@ -174,6 +174,7 @@
             this.userCards.TabIndex = 0;
             this.userCards.Text = "User cards";
             this.userCards.UseVisualStyleBackColor = true;
+            this.userCards.Click += new System.EventHandler(this.userCards_Click);
             // 
             // roundNumberLabel
             // 

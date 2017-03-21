@@ -17,6 +17,7 @@ namespace Card_War
         private int cpuPoints = 0;
         private int userPoints = 0;
         private string username;
+        private string cpuName;
 
 
         public Game()
@@ -65,16 +66,22 @@ namespace Card_War
             NewGameWindow newGame = sender as NewGameWindow;
             newGame.FormClosing -= confirmClosing;
             newGame.FormClosed -= NewGame_FormClosed;
-            newGame.Close();
+            
 
             username = newGame.username.Text;
-            string cpuName = newGame.cpuName.Text;
+            cpuName = newGame.cpuName.Text;
             maxRounds = (int)newGame.numberOfRounds.Value;
 
             this.userPoints = this.cpuPoints = 0;
             this.userCards.Text = $"{username} cards";
             this.user.Text = username;
-            this.currentRound = 1;
+
+            this.cpuCards.Text = $"{cpuName} cards";
+            this.label1.Text = cpuName;
+
+            newGame.Close();
+
+            this.currentRound = 0;
             this.updateScores();
             this.updateRoundNumber();
 
@@ -86,6 +93,11 @@ namespace Card_War
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.hideWindow();
+        }
+
+        private void hideWindow()
+        {
             Opacity = 0;
             ShowInTaskbar = false;
         }
@@ -93,12 +105,82 @@ namespace Card_War
         private void updateScores()
         {
             this.userScore.Text = $"{username} points:       {userPoints}";
-            this.cpuScore.Text = $"CPU points:       {cpuPoints}";
+            this.cpuScore.Text = $"{cpuName} points:       {cpuPoints}";
         }
 
         private void updateRoundNumber()
         {
             this.roundNumberLabel.Text = $"Round: {currentRound} of {maxRounds}";
+        }
+
+        private void userCards_Click(object sender, EventArgs e)
+        {
+            this.newRound();
+        }
+
+        private void newRound()
+        {
+            if (currentRound >= maxRounds)
+                return;
+
+            Random r = new Random();
+            int userCard = r.Next(1, 10);
+            int cpuCard = r.Next(1, 10);
+
+            this.cpuCard.Text = cpuCard.ToString();
+            this.userCard.Text = userCard.ToString();
+            
+            if (userCard > cpuCard)
+            {
+                // player won
+                this.userPoints++;
+                this.userCard.BackColor = Color.Green;
+                this.cpuCard.BackColor = Color.Red;
+            }
+            else if (userCard < cpuCard)
+            {
+                this.cpuPoints++;
+                this.userCard.BackColor = Color.Red;
+                this.cpuCard.BackColor = Color.Green;
+            }
+            else
+            {
+                this.userCard.BackColor = Color.Orange;
+                this.cpuCard.BackColor = Color.Orange;
+            }
+            this.updateScores();
+
+            this.currentRound++;
+            this.updateRoundNumber();
+            if (this.currentRound == this.maxRounds)
+                this.checkWinCondition();
+        }
+
+        private void checkWinCondition()
+        {
+            if (userPoints > cpuPoints)
+            {
+                MessageBox.Show(this, $"{username} won", "You win");
+            }
+            else if (userPoints < cpuPoints)
+            {
+                MessageBox.Show(this, $"{cpuName} won", "You lose");
+            }
+            else
+            {
+                MessageBox.Show(this, "Draw", "Draw");
+            }
+
+            var playAnother = MessageBox.Show(this, "Would you like to play another game?", "Another game", MessageBoxButtons.YesNo);
+            if (playAnother == DialogResult.Yes)
+            {
+                this.hideWindow();
+                this.openNewGameWindow();
+            }
+            else
+            {
+                this.Close();
+            }
         }
     }
 }
