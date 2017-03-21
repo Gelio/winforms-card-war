@@ -53,6 +53,7 @@
             this.username.Name = "username";
             this.username.Size = new System.Drawing.Size(100, 20);
             this.username.TabIndex = 1;
+            this.username.Text = "Player";
             // 
             // label2
             // 
@@ -69,6 +70,7 @@
             this.cpuName.Name = "cpuName";
             this.cpuName.Size = new System.Drawing.Size(100, 20);
             this.cpuName.TabIndex = 3;
+            this.cpuName.Text = "CPU";
             // 
             // label3
             // 
@@ -85,6 +87,11 @@
             this.numberOfRounds.Name = "numberOfRounds";
             this.numberOfRounds.Size = new System.Drawing.Size(120, 20);
             this.numberOfRounds.TabIndex = 5;
+            this.numberOfRounds.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // startButton
             // 
@@ -119,11 +126,11 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox cpuName;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numberOfRounds;
         private System.Windows.Forms.Button startButton;
+        public System.Windows.Forms.TextBox username;
+        public System.Windows.Forms.TextBox cpuName;
+        public System.Windows.Forms.NumericUpDown numberOfRounds;
     }
 }
